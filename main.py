@@ -1,7 +1,5 @@
 import json
 
-#Buscar cancion o artista 
-opcion_busqueda = int(input("Por favor, igresa el numeor que corresponde a lo que quieras buscar: 1.Artista, 2. Cancion o 3. Genero"))
 
 #Cancion1
 cancion = {'identificador': 'song_001', 'titulo': 'Vanish into you','artistas': ['Lady gaga'],
@@ -15,8 +13,18 @@ cancion_2 = {'identificador': 'song_002', 'titulo': 'Abracadabra','artistas': ['
 cancion_3 = {'identificador': 'song_003', 'titulo': 'Die With a Smile','artistas': ['Lady gaga', 'Bruno Mars'],
             'generos':['Pop','Soft-Rock'],'album':'Mayhem','año':2025}
 
+cancion_4 = {
+    'identificador': 'song_004',
+    'titulo': 'Vogue',
+    'artistas': ['Madonna'],
+    'generos': ['Dance-Pop', 'House'],
+    'album': 'I’m Breathless',
+    'año': 1990
+}
+
+
 #Coleccion de canciones
-biblioteca  = [cancion, cancion_2,cancion_3] 
+biblioteca  = [cancion, cancion_2,cancion_3, cancion_4] 
 
 puntaje_reaccion = {1:1,2:-1,3:0.5,4:0}
 
@@ -57,28 +65,35 @@ def perfil_generos(historial,biblioteca):
                     else:
                         generos_favoritos[genero] += puntaje
     return generos_favoritos
-        
 
-    
+def visualizar_perfil_generos(generos_favoritos):
+    print("Generos favoritos:")
+    for genero, puntaje in sorted(generos_favoritos.items(), key=lambda x: x[1], reverse=True):
+        print(f"- {genero}: {puntaje}")
+
+
+
     #Buscar artista
 def buscar_artista (biblioteca,artista_buscado):
         canciones_encontradas = []
         for cancion in biblioteca:
             for artista in cancion['artistas']:
                 artista_normalizado = artista.lower().strip()
-                if artista_buscado == artista_normalizado:  
-                    canciones_encontradas.append(cancion    )
+                if artista_buscado in artista_normalizado:  
+                    canciones_encontradas.append(cancion)
         
                     
         return canciones_encontradas   
 
     #Buscar cancion por titulo
 def buscar_cancion(biblioteca,titulo_buscado):
+        canciones_encontradas = []
         for cancion in biblioteca:
-            if titulo_buscado  == cancion['titulo'].lower().strip():
+            titulo_normalizado = cancion['titulo'].lower().strip()
+            if titulo_buscado in titulo_normalizado:
+                canciones_encontradas.append(cancion)
         
-                return [cancion]
-        return []
+        return canciones_encontradas
 
     #Buscar genero
 def buscar_genero (biblioteca,genero_buscado):
@@ -86,39 +101,64 @@ def buscar_genero (biblioteca,genero_buscado):
         for cancion in biblioteca:
             for genero in cancion['generos']:
                 genero_normalizado = genero.lower().strip().replace("-", "").replace(" ","")
-                if genero_buscado == genero_normalizado:
+                if genero_buscado in genero_normalizado:
                     generos_encontrados.append(cancion)
+                    break  # Salir del bucle de géneros si se encuentra una coincidencia
 
         return generos_encontrados
-
-#Menu
-if opcion_busqueda == 1:
-    artista_buscado = input('Por favor, indica el nombre del artista a buscar:').lower().strip()
-    resultado_busqueda = buscar_artista(biblioteca,artista_buscado)
-elif opcion_busqueda == 2:
-    titulo_buscado = input('Por favor, indica el nombre de la cancion a buscar:').lower().strip()
-    resultado_busqueda = buscar_cancion(biblioteca,titulo_buscado)
-elif opcion_busqueda == 3:
-    genero_buscado = input('Por favor, indica el nombre del genero a buscar:').lower().strip().replace("-", "").replace(" ","")
-    resultado_busqueda = buscar_genero(biblioteca,genero_buscado)
-else:
-    print('Opcion no valida. Por favor selecciona 1,2 o 3')
 
 #Generar reaccion
 def reaccion(historial,cancion):
     reacccion_usuario = int(input("Indica que te parecio la cancion: 1. Me gusta, 2. No me gusta, 3. Necesito escucharla de nuevo, 4. Omitir"))
-    if reacccion_usuario in (1,2,3):
+    if reacccion_usuario in (1,2,3,4):
         historial.append({'identificador': cancion['identificador'], 'reaccion': reacccion_usuario})
         
 
-
-if opcion_busqueda in (1,2,3):
-    if not resultado_busqueda:
-        print("Canción, artista o genero no encontrado. Intenta de nuevo.")  
+#Loop menu  
+while True:
+    try:
+        opcion_busqueda = int(input("Por favor, igresa el numero que corresponde a lo que quieras buscar: " \
+"1.Artista, 2. Cancion, 3. Genero ,4.Ver perfil de generos, 5. Salir"))
+    except ValueError:
+        print("Por favor, ingresa un número válido.")
+        continue    
+    if opcion_busqueda == 1:
+        artista_buscado = input('Por favor, indica el nombre del artista a buscar:').lower().strip()
+        resultado_busqueda = buscar_artista(biblioteca,artista_buscado)
+    elif opcion_busqueda == 2:
+        titulo_buscado = input('Por favor, indica el nombre de la cancion a buscar:').lower().strip()
+        resultado_busqueda = buscar_cancion(biblioteca,titulo_buscado)
+    elif opcion_busqueda == 3:
+        genero_buscado = input('Por favor, indica el nombre del genero a buscar:').lower().strip().replace("-", "").replace(" ","")
+        resultado_busqueda = buscar_genero(biblioteca,genero_buscado)
+    elif opcion_busqueda == 4:
+        generos_favoritos = perfil_generos(historial,biblioteca)
+        visualizar_perfil_generos(generos_favoritos)
+    elif opcion_busqueda == 5:
+        print("Gracias por usar la aplicación. ¡Hasta luego!")
+        break
     else:
-        for cancion in resultado_busqueda:
-            mostrar_ficha(cancion)
-            reaccion(historial,cancion)
+        print('Opcion no valida. Por favor selecciona entre las opciones validas: 1, 2, 3 o 4.')
+
+    if opcion_busqueda in (1,2,3):
+            if not resultado_busqueda:
+                print("Canción, artista o genero no encontrado. Intenta de nuevo.")  
+            else:
+                for i, cancion in enumerate(resultado_busqueda):
+                    print(f"\nCanción {i +1 }: {cancion['titulo']} - {", ".join(cancion['artistas'])}")
+                try:
+                    cancion_seleccionada = int(input("Por favor, indica el numero de la cancion que quieres escuchar: "))
+                except ValueError:
+                    print("Por favor, ingresa un número válido.")
+                    continue    
+                if cancion_seleccionada < 1 or cancion_seleccionada > len(resultado_busqueda):
+                    print("Número de canción inválido. Intenta de nuevo.")
+                else:
+                    cancion = resultado_busqueda[cancion_seleccionada - 1]
+                    mostrar_ficha(cancion)
+                    reaccion(historial,cancion)
+
+
 
 guardar_historial(historial)
         
