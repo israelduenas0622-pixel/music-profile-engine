@@ -1,4 +1,4 @@
-from main import normalizar_genero
+from busquedas import normalizar_genero
 puntaje_reaccion = {1:1,2:-1,3:0.5,4:0}
 
 def perfil_generos(historial,biblioteca):
