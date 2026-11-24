@@ -74,7 +74,7 @@
 3. The corresponding search function is called:
    - `buscar_artista()`
    - `buscar_cancion()`
-   - `buscar_genero()`
+   - `buscar_genero()`git
 
 4. If matching songs are found, the program:
    - displays each song using `mostrar_ficha()`,
