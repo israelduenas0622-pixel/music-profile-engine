@@ -1,5 +1,6 @@
 import json
 from busquedas import buscar_artista, buscar_cancion, buscar_genero,normalizar_genero
+from historial import guardar_historial, cargar_historial
 
 
 #Cancion1
@@ -23,28 +24,13 @@ cancion_4 = {
     'año': 1990
 }
 
+historial = cargar_historial()
 
 #Coleccion de canciones
 biblioteca  = [cancion, cancion_2,cancion_3, cancion_4] 
 
 puntaje_reaccion = {1:1,2:-1,3:0.5,4:0}
 
-
-#Funciones historial
-def guardar_historial(historial):
-    with open('historial.json', 'w') as archivo_historial:
-        json.dump(historial, archivo_historial)
-
-
-def cargar_historial():
-    try:
-        with open('historial.json', 'r') as archivo_historial:
-            historial = json.load(archivo_historial)
-    except FileNotFoundError:
-        historial = []
-    return historial
-
-historial = cargar_historial()
 
     #Imprimir cancion
 def mostrar_ficha(cancion):
