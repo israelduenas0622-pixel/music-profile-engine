@@ -1,6 +1,7 @@
 import json
 from busquedas import buscar_artista, buscar_cancion, buscar_genero,normalizar_genero
 from historial import guardar_historial, cargar_historial
+from perfil import perfil_generos, visualizar_perfil_generos
 
 
 #Cancion1
@@ -29,7 +30,6 @@ historial = cargar_historial()
 #Coleccion de canciones
 biblioteca  = [cancion, cancion_2,cancion_3, cancion_4] 
 
-puntaje_reaccion = {1:1,2:-1,3:0.5,4:0}
 
 
     #Imprimir cancion
@@ -40,24 +40,6 @@ def mostrar_ficha(cancion):
         cancion['album'] + '\n'+
         str(cancion['año']))   
 
-def perfil_generos(historial,biblioteca):
-    generos_favoritos = {}
-    for reaccion in historial:
-        puntaje = puntaje_reaccion[reaccion['reaccion']]
-        for cancion in biblioteca:
-            if cancion['identificador'] == reaccion['identificador']:
-                for genero in cancion['generos']:
-                    genero = normalizar_genero(genero)
-                    if genero not in generos_favoritos:
-                        generos_favoritos[genero] = puntaje
-                    else:
-                        generos_favoritos[genero] += puntaje
-    return generos_favoritos
-
-def visualizar_perfil_generos(generos_favoritos):
-    print("Generos favoritos:")
-    for genero, puntaje in sorted(generos_favoritos.items(), key=lambda x: x[1], reverse=True):
-        print(f"- {genero}: {puntaje}")
 
 #Generar reaccion
 def reaccion(historial,cancion):
