@@ -1,0 +1,16 @@
+
+[
+    
+{"identificador": "song_001", "titulo": "Vanish into you", "artistas": ["Lady gaga"],
+            "generos": ["Glam-rock", "synth-pop", "dance-pop", "power-pop"], "album": "Mayhem", "year": 2025},
+
+{"identificador": "song_002", "titulo": "Abracadabra", "artistas": ["Lady gaga"],
+            "generos": ["Dance-Pop", "Electro-Pop", "Dark-Pop"], "album": "Mayhem", "year": 2025},
+
+
+{"identificador": "song_003", "titulo": "Die With a Smile", "artistas": ["Lady gaga", "Bruno Mars"],
+            "generos": ["Pop", "Soft-Rock"], "album": "Mayhem", "year": 2025},
+
+{"identificador": "song_004", "titulo": "Vogue", "artistas": ["Madonna"],
+            "generos": ["Dance-Pop", "House"], "album": "I’m Breathless", "year": 1990}
+]

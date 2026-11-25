@@ -3,33 +3,13 @@ from busquedas import buscar_artista, buscar_cancion, buscar_genero,normalizar_g
 from historial import guardar_historial, cargar_historial, reiniciar_historial
 from perfil import perfil_generos, visualizar_perfil_generos
 from interfaz import mostrar_ficha, reaccion, procesar_resultados
+from datos import cargar_biblioteca
 
-
-#Cancion1
-cancion = {'identificador': 'song_001', 'titulo': 'Vanish into you','artistas': ['Lady gaga'],
-            'generos':['Glam-rock','synth-pop','dance-pop','power-pop'],'album':'Mayhem','año':2025}
-
-    #segunda cancion 
-cancion_2 = {'identificador': 'song_002', 'titulo': 'Abracadabra','artistas': ['Lady gaga'],
-            'generos':['Dance-Pop','Electro-Pop','Dark-Pop'],'album':'Mayhem','año':2025}
-
-#Cancion3
-cancion_3 = {'identificador': 'song_003', 'titulo': 'Die With a Smile','artistas': ['Lady gaga', 'Bruno Mars'],
-            'generos':['Pop','Soft-Rock'],'album':'Mayhem','año':2025}
-
-cancion_4 = {
-    'identificador': 'song_004',
-    'titulo': 'Vogue',
-    'artistas': ['Madonna'],
-    'generos': ['Dance-Pop', 'House'],
-    'album': 'I’m Breathless',
-    'año': 1990
-}
 
 historial = cargar_historial()
 
 #Coleccion de canciones
-biblioteca  = [cancion, cancion_2,cancion_3, cancion_4] 
+biblioteca  = cargar_biblioteca()
 
 
 #Loop menu  
