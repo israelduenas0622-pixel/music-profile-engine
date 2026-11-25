@@ -14,3 +14,8 @@ def cargar_historial():
         historial = []
     return historial
 
+#Reiniciar historial
+def reiniciar_historial(historial):
+    historial.clear()
+    guardar_historial(historial)
+

@@ -1,6 +1,6 @@
 import json
 from busquedas import buscar_artista, buscar_cancion, buscar_genero,normalizar_genero
-from historial import guardar_historial, cargar_historial
+from historial import guardar_historial, cargar_historial, reiniciar_historial
 from perfil import perfil_generos, visualizar_perfil_generos
 from interfaz import mostrar_ficha, reaccion, procesar_resultados
 
@@ -35,8 +35,8 @@ biblioteca  = [cancion, cancion_2,cancion_3, cancion_4]
 #Loop menu  
 while True:
     try:
-        opcion_busqueda = int(input("Por favor, igresa el numero que corresponde a lo que quieras buscar: " \
-"1.Artista, 2. Cancion, 3. Genero ,4.Ver perfil de generos, 5. Salir"))
+        opcion_busqueda = int(input("Por favor, selecciona una opción: " \
+"1.Artista, 2. Cancion, 3. Genero ,4.Ver perfil de generos, 5. Reiniciar historial, 6. Salir"))
     except ValueError:
         print("Por favor, ingresa un número válido.")
         continue    
@@ -53,10 +53,21 @@ while True:
         generos_favoritos = perfil_generos(historial,biblioteca)
         visualizar_perfil_generos(generos_favoritos)
     elif opcion_busqueda == 5:
+        confirmacion = input("¿Estás seguro de que deseas reiniciar el historial? (s/n): ")
+        confirmacion = confirmacion.lower().strip()
+        while confirmacion not in ['s', 'n']:   
+            confirmacion = input("Opción no válida. Por favor, ingresa 's' para sí o 'n' para no: ")
+            confirmacion = confirmacion.lower().strip()
+        if confirmacion == 's':
+            reiniciar_historial(historial)
+            print("Historial reiniciado.")
+        elif confirmacion == 'n':
+            print("Reinicio de historial cancelado.")
+    elif opcion_busqueda == 6:
         print("Gracias por usar la aplicación. ¡Hasta luego!")
         break
     else:
-        print('Opcion no valida. Por favor selecciona entre las opciones validas: 1, 2, 3 o 4.')
+        print('Opcion no valida. Por favor selecciona entre las opciones validas.')
 
     if opcion_busqueda in (1, 2, 3):
         procesar_resultados(resultado_busqueda,historial)  
